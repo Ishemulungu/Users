@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Temperature_RecordsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TemperatureRecord">
+          <Key>
+            <PropertyRef Name="TemperatureRecord" />
+          </Key>
+          <Property Name="TemperatureRecord" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsersID" Type="int" />
+          <Property Name="TemperatureReading" Type="money" Nullable="false" />
+          <Property Name="DateCaptured" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UsersID" />
+          </Key>
+          <Property Name="UsersID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="UserTypeID" />
+          </Key>
+          <Property Name="UserTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserTypeName" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Temperatu__Users__6477ECF3">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="TemperatureRecord" Type="Self.TemperatureRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UsersID" />
+            </Principal>
+            <Dependent Role="TemperatureRecord">
+              <PropertyRef Name="UsersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__UserTypeI__619B8048">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="UserTypeID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Temperature_RecordsModelStoreContainer">
+          <EntitySet Name="TemperatureRecord" EntityType="Self.TemperatureRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Temperatu__Users__6477ECF3" Association="Self.FK__Temperatu__Users__6477ECF3">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TemperatureRecord" EntitySet="TemperatureRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__UserTypeI__619B8048" Association="Self.FK__Users__UserTypeI__619B8048">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Temperature_RecordsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TemperatureRecord">
+          <Key>
+            <PropertyRef Name="TemperatureRecord1" />
+          </Key>
+          <Property Name="TemperatureRecord1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsersID" Type="Int32" />
+          <Property Name="TemperatureReading" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="DateCaptured" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Temperatu__Users__6477ECF3" FromRole="TemperatureRecord" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UsersID" />
+          </Key>
+          <Property Name="UsersID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserTypeID" Type="Int32" />
+          <NavigationProperty Name="TemperatureRecords" Relationship="Self.FK__Temperatu__Users__6477ECF3" FromRole="Users" ToRole="TemperatureRecord" />
+          <NavigationProperty Name="UserType" Relationship="Self.FK__Users__UserTypeI__619B8048" FromRole="Users" ToRole="UserType" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="UserTypeID" />
+          </Key>
+          <Property Name="UserTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserTypeName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__UserTypeI__619B8048" FromRole="UserType" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK__Temperatu__Users__6477ECF3">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="TemperatureRecord" Type="Self.TemperatureRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UsersID" />
+            </Principal>
+            <Dependent Role="TemperatureRecord">
+              <PropertyRef Name="UsersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__UserTypeI__619B8048">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="UserTypeID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Temperature_RecordsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TemperatureRecords" EntityType="Self.TemperatureRecord" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserTypes" EntityType="Self.UserType" />
+          <AssociationSet Name="FK__Temperatu__Users__6477ECF3" Association="Self.FK__Temperatu__Users__6477ECF3">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TemperatureRecord" EntitySet="TemperatureRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__UserTypeI__619B8048" Association="Self.FK__Users__UserTypeI__619B8048">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Temperature_RecordsModelStoreContainer" CdmEntityContainer="Temperature_RecordsEntities">
+          <EntitySetMapping Name="TemperatureRecords">
+            <EntityTypeMapping TypeName="Temperature_RecordsModel.TemperatureRecord">
+              <MappingFragment StoreEntitySet="TemperatureRecord">
+                <ScalarProperty Name="TemperatureRecord1" ColumnName="TemperatureRecord" />
+                <ScalarProperty Name="UsersID" ColumnName="UsersID" />
+                <ScalarProperty Name="TemperatureReading" ColumnName="TemperatureReading" />
+                <ScalarProperty Name="DateCaptured" ColumnName="DateCaptured" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Temperature_RecordsModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UsersID" ColumnName="UsersID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTypes">
+            <EntityTypeMapping TypeName="Temperature_RecordsModel.UserType">
+              <MappingFragment StoreEntitySet="UserType">
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+                <ScalarProperty Name="UserTypeName" ColumnName="UserTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

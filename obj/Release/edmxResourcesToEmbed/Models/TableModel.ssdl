@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Temperature_RecordsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TemperatureRecord">
+    <Key>
+      <PropertyRef Name="TemperatureRecord" />
+    </Key>
+    <Property Name="TemperatureRecord" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UsersID" Type="int" />
+    <Property Name="TemperatureReading" Type="money" Nullable="false" />
+    <Property Name="DateCaptured" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UsersID" />
+    </Key>
+    <Property Name="UsersID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FullName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserTypeID" Type="int" />
+  </EntityType>
+  <EntityType Name="UserType">
+    <Key>
+      <PropertyRef Name="UserTypeID" />
+    </Key>
+    <Property Name="UserTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserTypeName" Type="varchar" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Temperatu__Users__6477ECF3">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="TemperatureRecord" Type="Self.TemperatureRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UsersID" />
+      </Principal>
+      <Dependent Role="TemperatureRecord">
+        <PropertyRef Name="UsersID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__UserTypeI__619B8048">
+    <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserType">
+        <PropertyRef Name="UserTypeID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="UserTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Temperature_RecordsModelStoreContainer">
+    <EntitySet Name="TemperatureRecord" EntityType="Self.TemperatureRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Temperatu__Users__6477ECF3" Association="Self.FK__Temperatu__Users__6477ECF3">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="TemperatureRecord" EntitySet="TemperatureRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__UserTypeI__619B8048" Association="Self.FK__Users__UserTypeI__619B8048">
+      <End Role="UserType" EntitySet="UserType" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

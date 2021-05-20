@@ -1,0 +1,42 @@
+﻿@model Temperature_Recording.Models.TemperatureRecord
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Temperature Record</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Temperature Reading
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TemperatureReading)
+        </dd>
+
+        <dt>
+            Date Captured
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCaptured)
+        </dd>
+
+        <dt>
+            Fullnames
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FullName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TemperatureRecord1 }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

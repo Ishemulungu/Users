@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Temperature_RecordsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TemperatureRecord">
+    <Key>
+      <PropertyRef Name="TemperatureRecord1" />
+    </Key>
+    <Property Name="TemperatureRecord1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsersID" Type="Int32" />
+    <Property Name="TemperatureReading" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="DateCaptured" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Temperatu__Users__6477ECF3" FromRole="TemperatureRecord" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UsersID" />
+    </Key>
+    <Property Name="UsersID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserTypeID" Type="Int32" />
+    <NavigationProperty Name="TemperatureRecords" Relationship="Self.FK__Temperatu__Users__6477ECF3" FromRole="Users" ToRole="TemperatureRecord" />
+    <NavigationProperty Name="UserType" Relationship="Self.FK__Users__UserTypeI__619B8048" FromRole="Users" ToRole="UserType" />
+  </EntityType>
+  <EntityType Name="UserType">
+    <Key>
+      <PropertyRef Name="UserTypeID" />
+    </Key>
+    <Property Name="UserTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserTypeName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Users__UserTypeI__619B8048" FromRole="UserType" ToRole="Users" />
+  </EntityType>
+  <Association Name="FK__Temperatu__Users__6477ECF3">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="TemperatureRecord" Type="Self.TemperatureRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UsersID" />
+      </Principal>
+      <Dependent Role="TemperatureRecord">
+        <PropertyRef Name="UsersID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__UserTypeI__619B8048">
+    <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserType">
+        <PropertyRef Name="UserTypeID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="UserTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Temperature_RecordsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TemperatureRecords" EntityType="Self.TemperatureRecord" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserTypes" EntityType="Self.UserType" />
+    <AssociationSet Name="FK__Temperatu__Users__6477ECF3" Association="Self.FK__Temperatu__Users__6477ECF3">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="TemperatureRecord" EntitySet="TemperatureRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__UserTypeI__619B8048" Association="Self.FK__Users__UserTypeI__619B8048">
+      <End Role="UserType" EntitySet="UserTypes" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

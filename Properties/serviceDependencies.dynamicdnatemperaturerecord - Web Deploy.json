@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/dynamicdna/databases/Temperature_Records",
+      "type": "mssql.azure",
+      "connectionId": "Temperature_RecordsEntities",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}

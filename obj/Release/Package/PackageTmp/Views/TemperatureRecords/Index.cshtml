@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Temperature_Recording.Models.TemperatureRecord>
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Temperature Record</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+           Temperature Reading
+        </th>
+        <th>
+           Date Captured
+        </th>
+        <th>
+           Fullnames
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TemperatureReading)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCaptured)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.FullName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TemperatureRecord1 }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TemperatureRecord1 }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TemperatureRecord1 })
+        </td>
+    </tr>
+}
+
+</table>
